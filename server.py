@@ -4,6 +4,7 @@ import tornado.websocket
 import paramiko
 import threading
 import time
+import os
 
 # 配置服务器信息
 HOSTS = "192.168.1.101"
@@ -61,8 +62,15 @@ class HomeHandler(tornado.web.RequestHandler):
         self.render("templates/index.html")
 
 if __name__ == '__main__':
+    # 设置静态文件
+    settings = {
+        "static_path": os.path.join(os.path.dirname(__file__), "static"),
+        "cookie_secret": "__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
+        "login_url": "/login",
+        "xsrf_cookies": True,
+    }
     # 定义路由
-    term = tornado.web.Application([
+    app = tornado.web.Application([
         (r"/terminals/", webSSHServer),
         (r"/",HomeHandler)
     ],
@@ -70,6 +78,6 @@ if __name__ == '__main__':
     )
 
     # 启动服务器
-    http_server = tornado.httpserver.HTTPServer(term)
+    http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(3000)
     tornado.ioloop.IOLoop.current().start()
