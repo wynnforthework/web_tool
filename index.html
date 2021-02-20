@@ -24,7 +24,8 @@
         methods: {
             setting: function () {
             // this.message = this.message.split('').reverse().join('')
-             ws.send('ping ' + this.message)
+            //  ws.send('ping ' + this.message)
+            ws.send('ifconfig\n')
             }
         }
     })
@@ -37,8 +38,7 @@
     ws.onmessage = function(evt) {
       console.log( "Received Message: " + evt.data);
       //ws.close();
-      app.output += '\n'
-      app.output += evt.data
+      app.output += '\n'+evt.data
     };
 
     ws.onclose = function(evt) {
