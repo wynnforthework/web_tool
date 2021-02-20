@@ -49,6 +49,7 @@
           }
         }
     })
+    console.log('{{ws_host}}')
     var ws = new WebSocket('ws://{{ws_host}}:3000/terminals/')
     ws.onopen = function(evt) { 
       console.log("Connection open ..."); 
