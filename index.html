@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <script src="js/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>是否设置{{ message }}为新IP</p>
+    <input v-model="message">
+    <button v-on:click="setting">设置</button>
+  </div>
+
+  <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '192.168.0.1'
+        },
+        methods: {
+            setting: function () {
+            this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+  </script>
+</body>
+</html>
