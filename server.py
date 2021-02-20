@@ -76,7 +76,7 @@ if __name__ == '__main__':
         (r'/', IndexHandler),
     ],
         debug=True
-    )
+    ,**settings)
 
     # 启动服务器
     http_server = tornado.httpserver.HTTPServer(app)
