@@ -4,6 +4,17 @@ import tornado.websocket
 import paramiko
 import threading
 import time
+from flask import Flask, request, render_template, Markup
+f = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def demo():
+  if request.method == 'GET':
+    return render_template('index.html', input_text = '', res_text = '')
+  else:
+    inputText = request.form.get("input_text")
+    resText = Markup(formatRes(reverseText(inputText)))
+    return render_template('index.html', input_text = inputText, res_text = resText)
 
 # 配置服务器信息
 HOSTS = "192.168.1.101"
@@ -69,3 +80,6 @@ if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(3000)
     tornado.ioloop.IOLoop.current().start()
+    
+    # 启动网页
+    f.run()
