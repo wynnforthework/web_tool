@@ -66,10 +66,10 @@ class IndexHandler(tornado.web.RequestHandler):
             print('2')
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('8.8.8.8', 80))
-            print(s.getsockname()[0])
-            WsHost = s.getsockname()[0]
+            self.WsHost = s.getsockname()[0]
             s.close()
         print('3')
+        print(self.WsHost)
         self.render("index.html",ws_host=self.WsHost)
 
 if __name__ == '__main__':
