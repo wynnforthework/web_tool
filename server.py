@@ -12,7 +12,6 @@ HOSTS = "192.168.1.101"
 PORT = 22
 USERNAME = "titan"
 PASSWORD = "titan4"
-WsHost = ""
 
 class MyThread(threading.Thread):
     def __init__(self, id, chan):
@@ -59,14 +58,16 @@ class webSSHServer(tornado.websocket.WebSocketHandler):
         return True
 
 class IndexHandler(tornado.web.RequestHandler):
+    WsHost = ""
+    
     def get(self):
-        if(WsHost == ''):
+        if(self.WsHost == ''):
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('8.8.8.8', 80))
             print(s.getsockname()[0])
             WsHost = s.getsockname()[0]
             s.close()
-        self.render("index.html",ws_host=WsHost)
+        self.render("index.html",ws_host=self.WsHost)
 
 if __name__ == '__main__':
     # 设置静态文件
