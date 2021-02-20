@@ -60,13 +60,13 @@ class webSSHServer(tornado.websocket.WebSocketHandler):
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        if(self.WsHost == ''):
+        if(WsHost == ''):
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('8.8.8.8', 80))
             print(s.getsockname()[0])
-            self.WsHost = s.getsockname()[0]
+            WsHost = s.getsockname()[0]
             s.close()
-        self.render("index.html",ws_host=self.WsHost)
+        self.render("index.html",ws_host=WsHost)
 
 if __name__ == '__main__':
     # 设置静态文件
