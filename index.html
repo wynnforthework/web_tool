@@ -23,7 +23,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '192.168.0.1',
+            message: '',
             output: '',
             shuju: ['ipconfig\n'],
             one: ''
@@ -36,6 +36,11 @@
             clean: function () {
               this.output = ''
             }
+        },
+        watch : {
+          "one"(newVal, oldVal) {
+            this.message = newVal
+          }
         }
     })
     var ws = new WebSocket('ws://127.0.0.1:3000/terminals/')
