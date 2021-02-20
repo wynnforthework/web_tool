@@ -5,13 +5,14 @@ import paramiko
 import threading
 import time
 import os
+import socket
 
 # 配置服务器信息
 HOSTS = "192.168.1.101"
 PORT = 22
 USERNAME = "titan"
 PASSWORD = "titan4"
-
+WsHost = ""
 
 class MyThread(threading.Thread):
     def __init__(self, id, chan):
@@ -59,7 +60,12 @@ class webSSHServer(tornado.websocket.WebSocketHandler):
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        if(WsHost == ''):
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('8.8.8.8', 80))
+            print(s.getsockname()[0])
+            s.close()
+        self.render("index.html",ws_host=WsHost)
 
 if __name__ == '__main__':
     # 设置静态文件
