@@ -31,7 +31,10 @@
         methods: {
             setting: function () {
               ws.send(this.message+'\n')
-              var find = this.shuju.find((item) => item === this.message)
+              var find = this.shuju.find((item) => {
+                console.log(item)
+                return item === this.message
+              })
               if(find == undefined) {
                 this.shuju.push(this.message)
               }
