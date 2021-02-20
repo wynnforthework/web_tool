@@ -3,8 +3,6 @@
 <head>
   <title>Web Tool</title>
   <script src="js/vue.js"></script>
-  <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
-  <script src="node_modules/xterm/lib/xterm.js"></script>
 </head>
 <body>
   <div id="app">
@@ -13,7 +11,7 @@
     <button v-on:click="setting">设置</button>
     <button v-on:click="clean">清除</button>
     <select v-model="one">
-      <option v-for="x in shuju">{{x.name}}</option>
+      <option v-for="x in shuju">{{x}}</option>
     </select><br>
     <div>
       <span>当前选中命令：{{one}}</span>
@@ -33,7 +31,7 @@
         methods: {
             setting: function () {
               ws.send(this.message+'\n')
-              this.shuju.append({name:this.message})
+              this.shuju.append(this.message)
             },
             clean: function () {
               this.output = ''
