@@ -12,56 +12,34 @@
     <input v-model="message">
     <button v-on:click="setting">设置</button>
   </div>
-  <div id="terminal"></div>
+
   <script>
-    
-    var vm = new Vue({
-      name: 'Console',
-      props: {
-        terminal: {
-          type: Object,
-          default: ()=>{}
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '192.168.0.1'
+        },
+        methods: {
+            setting: function () {
+            // this.message = this.message.split('').reverse().join('')
+             ws.send('ping ' + this.message)
+            }
         }
-      },
-      data: {
-        term: null,
-        terminalSocket: null,
-        message: '192.168.0.1'
-      },
-      methods: {
-        runRealTerminal () {
-          console.log('webSocket is finished')
-        },
-        errorRealTerminal () {
-          console.log('error')
-        },
-        closeRealTerminal () {
-          console.log('close')
-        },
-        setting: function () {
-          term.writeln('ping '+this.message)
-        //this.message = this.message.split('').reverse().join('')
-        }
-      },
-      mounted () {
-        console.log('pid : ' + this.terminal.pid + ' is on ready')
-        let terminalContainer = document.getElementById('terminal')
-        this.term = new Terminal()
-        this.term.open(terminalContainer)
-        // open websocket
-        this.terminalSocket = new WebSocket('ws://127.0.0.1:3000/terminals/')
-        this.terminalSocket.onopen = this.runRealTerminal
-        this.terminalSocket.onclose = this.closeRealTerminal
-        this.terminalSocket.onerror = this.errorRealTerminal
-        this.term.attach(this.terminalSocket)
-        this.term._initialized = true
-        console.log('mounted is going on')
-      },
-      beforeDestroy () {
-        this.terminalSocket.close()
-        this.term.destroy()
-      }
     })
+    var ws = new WebSocket('ws://127.0.0.1:3000/terminals/')
+    ws.onopen = function(evt) { 
+      console.log("Connection open ..."); 
+      ws.send("Hello WebSockets!");
+    };
+
+    ws.onmessage = function(evt) {
+      console.log( "Received Message: " + evt.data);
+      ws.close();
+    };
+
+    ws.onclose = function(evt) {
+      console.log("Connection closed.");
+    };    
   </script>
 </body>
 </html>
