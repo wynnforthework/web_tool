@@ -23,12 +23,10 @@
           default: {}
         }
       },
-      data () {
-        return {
-          term: null,
-          terminalSocket: null,
-          message: '192.168.0.1'
-        }
+      data: {
+        term: null,
+        terminalSocket: null,
+        message: '192.168.0.1'
       },
       methods: {
         runRealTerminal () {
