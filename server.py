@@ -5,17 +5,12 @@ import paramiko
 import threading
 import time
 from flask import Flask, request, render_template, Markup
-f = Flask(__name__)
+app = Flask(__name__)
 
-@f.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def demo():
-  if request.method == 'GET':
     return render_template('index.html', input_text = '', res_text = '')
-  else:
-    inputText = request.form.get("input_text")
-    resText = Markup(formatRes(reverseText(inputText)))
-    return render_template('index.html', input_text = inputText, res_text = resText)
-
+ 
 # 配置服务器信息
 HOSTS = "192.168.1.101"
 PORT = 22
@@ -70,16 +65,16 @@ class webSSHServer(tornado.websocket.WebSocketHandler):
 
 if __name__ == '__main__':
     # 定义路由
-    app = tornado.web.Application([
+    term = tornado.web.Application([
         (r"/terminals/", webSSHServer),
     ],
         debug=True
     )
 
     # 启动服务器
-    http_server = tornado.httpserver.HTTPServer(app)
+    http_server = tornado.httpserver.HTTPServer(term)
     http_server.listen(3000)
     tornado.ioloop.IOLoop.current().start()
     
     # 启动网页
-    f.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True)
