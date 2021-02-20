@@ -4,13 +4,7 @@ import tornado.websocket
 import paramiko
 import threading
 import time
-from flask import Flask, request, render_template, Markup
-app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def demo():
-    return render_template('index.html', input_text = '', res_text = '')
- 
 # 配置服务器信息
 HOSTS = "192.168.1.101"
 PORT = 22
@@ -62,11 +56,15 @@ class webSSHServer(tornado.websocket.WebSocketHandler):
         # 允许跨域访问
         return True
 
+class HomeHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("templates/index.html")
 
 if __name__ == '__main__':
     # 定义路由
     term = tornado.web.Application([
         (r"/terminals/", webSSHServer),
+        (r"/",HomeHandler)
     ],
         debug=True
     )
@@ -75,6 +73,3 @@ if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(term)
     http_server.listen(3000)
     tornado.ioloop.IOLoop.current().start()
-    
-    # 启动网页
-    app.run(host="0.0.0.0",port=5000, debug=True)
