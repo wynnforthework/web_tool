@@ -31,7 +31,7 @@
         methods: {
             setting: function () {
               ws.send(this.message+'\n')
-              this.shuju.append(this.message)
+              this.shuju.push(this.message)
             },
             clean: function () {
               this.output = ''
