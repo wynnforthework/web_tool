@@ -5,6 +5,7 @@
   <script src="{{ static_url('js/vue.js') }}"></script>
 </head>
 <body>
+  {% raw %}
   <div id="app">
     <p>是否设置{{ message }}为新IP</p>
     <textarea v-model="message"></textarea>
@@ -18,7 +19,7 @@
     </div>
     <pre>{{ output }}</pre>
   </div>
-
+  {% endraw %}
   <script>
     var app = new Vue({
         el: '#app',
