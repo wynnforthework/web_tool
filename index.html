@@ -15,7 +15,7 @@
   <div id="terminal"></div>
   <script>
     
-    export default {
+    var vm = new Vue({
       name: 'Console',
       props: {
         terminal: {
@@ -63,7 +63,7 @@
         this.terminalSocket.close()
         this.term.destroy()
       }
-    }
+    })
   </script>
 </body>
 </html>
