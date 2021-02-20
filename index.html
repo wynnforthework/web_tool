@@ -5,23 +5,22 @@
   <script src="{{ static_url('js/vue.js') }}"></script>
 </head>
 <body>
-  {% raw %}
   <div id="app">
-    <p>是否设置{{ message }}为新IP</p>
+    <p>是否设置{[ message ]}为新IP</p>
     <textarea v-model="message"></textarea>
     <button v-on:click="setting">设置</button>
     <button v-on:click="clean">清除</button>
     <select v-model="one">
-      <option v-for="x in shuju">{{x}}</option>
+      <option v-for="x in shuju">{[x]}</option>
     </select><br>
     <div>
-      <span>当前选中命令：{{one}}</span>
+      <span>当前选中命令：{[one]}</span>
     </div>
-    <pre>{{ output }}</pre>
+    <pre>{[ output ]}</pre>
   </div>
-  {% endraw %}
   <script>
     var app = new Vue({
+        delimiters: ['{[', ']}'],
         el: '#app',
         data: {
             message: '',
