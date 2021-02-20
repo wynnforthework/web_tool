@@ -82,4 +82,4 @@ if __name__ == '__main__':
     tornado.ioloop.IOLoop.current().start()
     
     # 启动网页
-    f.run()
+    f.run(host="0.0.0.0", debug=True)
