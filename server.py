@@ -7,7 +7,7 @@ import time
 from flask import Flask, request, render_template, Markup
 f = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@f.route('/', methods=['GET', 'POST'])
 def demo():
   if request.method == 'GET':
     return render_template('index.html', input_text = '', res_text = '')
