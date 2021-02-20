@@ -12,6 +12,12 @@
     <input v-model="message">
     <button v-on:click="setting">设置</button>
     <button v-on:click="clean">清除</button>
+    <select v-model="one">
+      <option v-for="x in shuju">{{x.name}}</option>
+    </select><br>
+    <div>
+      <span>当前选中命令：{{one}}</span>
+    </div>
     <pre>{{ output }}</pre>
   </div>
 
@@ -20,11 +26,14 @@
         el: '#app',
         data: {
             message: '192.168.0.1',
-            output: ''
+            output: '',
+            shuju: ['ipconfig\n'],
+            one: ''
         },
         methods: {
             setting: function () {
-              ws.send('ifconfig\n')
+              ws.send(this.message+'\n')
+              this.shuju.append({name:this.message})
             },
             clean: function () {
               this.output = ''
