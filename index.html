@@ -11,13 +11,15 @@
     <p>是否设置{{ message }}为新IP</p>
     <input v-model="message">
     <button v-on:click="setting">设置</button>
+    <p>{{ output }}</p>
   </div>
 
   <script>
     var app = new Vue({
         el: '#app',
         data: {
-            message: '192.168.0.1'
+            message: '192.168.0.1',
+            output: ''
         },
         methods: {
             setting: function () {
@@ -35,7 +37,7 @@
     ws.onmessage = function(evt) {
       console.log( "Received Message: " + evt.data);
       //ws.close();
-      this.message = evt.data
+      app.output = evt.data
     };
 
     ws.onclose = function(evt) {
