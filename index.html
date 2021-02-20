@@ -11,6 +11,7 @@
     <p>是否设置{{ message }}为新IP</p>
     <input v-model="message">
     <button v-on:click="setting">设置</button>
+    <button v-on:click="clean">清除</button>
     <pre>{{ output }}</pre>
   </div>
 
@@ -23,16 +24,17 @@
         },
         methods: {
             setting: function () {
-            // this.message = this.message.split('').reverse().join('')
-            //  ws.send('ping ' + this.message)
-            ws.send('ifconfig\n')
+              ws.send('ifconfig\n')
+            },
+            clean: function () {
+              output = ''
             }
         }
     })
     var ws = new WebSocket('ws://127.0.0.1:3000/terminals/')
     ws.onopen = function(evt) { 
       console.log("Connection open ..."); 
-      ws.send("Hello WebSockets!");
+      //ws.send("Hello WebSockets!");
     };
 
     ws.onmessage = function(evt) {
