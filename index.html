@@ -37,7 +37,7 @@
     ws.onmessage = function(evt) {
       console.log( "Received Message: " + evt.data);
       //ws.close();
-      app.output = evt.data
+      app.output += evt.data
     };
 
     ws.onclose = function(evt) {
